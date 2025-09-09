@@ -15,11 +15,17 @@ Works locally or in GitHub Actions, helping enforce code quality and CI/CD stand
 
 ---
 
-## Installation
+
+## Installation & Setup
 
 ```bash
-npm install -g pr-auto-review
+# Clone repo and install dependencies
+git clone https://github.com/kyawsoe-dev/pr-auto-review.git
+cd pr-auto-review
+npm install
 ```
+
+---
 
 
 # Create .env file
@@ -29,6 +35,9 @@ GITHUB_EVENT_PATH=./event.json
 GITHUB_TOKEN=dummy-token
 COVERAGE_THRESHOLD=80
 ```
+
+---
+
 
 ## Scripts & Usage
 
@@ -52,3 +61,10 @@ The package provides several npm scripts to help you run linting, tests, coverag
 ```bash
 # Generate event.json
 npm run generate-event
+
+```
+
+---
+
+
+
