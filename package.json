@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kyawsoe-dev/nestjs-generator-cli.git"
+    "url": "git+https://github.com/kyawsoe-dev/pr-auto-review.git"
   },
   "keywords": [
     "github",
@@ -31,7 +31,7 @@
   ],
   "author": "Kyaw Soe",
   "license": "MIT",
-  "homepage": "https://github.com/kyawsoe-dev/nestjs-generator-cli#readme",
+  "homepage": "https://github.com/kyawsoe-dev/pr-auto-review#readme",
   "type": "module",
   "devDependencies": {
     "@eslint/js": "^9.35.0",
