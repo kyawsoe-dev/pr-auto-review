@@ -1,6 +1,6 @@
 export default {
   testEnvironment: "node",
-  collectCoverage: true,
+  collectCoverage: true,  
   coverageDirectory: "coverage",
   coverageReporters: ["json-summary", "text", "lcov"],
   verbose: true

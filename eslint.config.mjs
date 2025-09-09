@@ -14,9 +14,15 @@ export default defineConfig([
     extends: [js.configs.recommended],
   },
   {
-    files: ["**/*.js"],
+    files: ["**/*.spec.js", "**/*.test.js"],
     languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+        ...globals.jest,
+      },
       sourceType: "module",
     },
+    extends: [js.configs.recommended],
   },
 ]);
