@@ -48,7 +48,7 @@ The package provides several npm scripts to help you run linting, tests, coverag
 | `npm run lint` | Run ESLint checks on all JS files | `npm run lint` |
 | `npm test` | Run Jest tests | `npm test` |
 | `npm run test:coverage` | Run Jest tests with coverage, outputs `coverage/coverage-summary.json` | `npm run test:coverage` |
-| `npm run generate-event` | Generate a local `event.json` simulating a GitHub PR | `npm run generate-event -- 42 alice` |
+| `npm run generate-event` | Generate a local `event.json` simulating a GitHub PR | `npm run generate-event` |
 | `npm run pr-check` | Run PR checks: lint, tests, coverage, and optionally post GitHub comment | `npm run pr-check` |
 | `npm run pr-test` | Combine `generate-event` + `pr-check` for a full local test | `npm run pr-test` |
 
