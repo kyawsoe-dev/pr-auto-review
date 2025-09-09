@@ -23,6 +23,7 @@ npm install -g pr-auto-review
 
 
 # Create .env file
+```env
 GITHUB_REPOSITORY=yourusername/pr-auto-review
 GITHUB_EVENT_PATH=./event.json
 GITHUB_TOKEN=dummy-token
