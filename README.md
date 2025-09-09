@@ -28,7 +28,7 @@ GITHUB_REPOSITORY=yourusername/pr-auto-review
 GITHUB_EVENT_PATH=./event.json
 GITHUB_TOKEN=dummy-token
 COVERAGE_THRESHOLD=80
-
+```
 
 ## Scripts & Usage
 
