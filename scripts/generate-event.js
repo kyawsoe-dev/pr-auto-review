@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import fs from "fs";
-import { Octokit } from "@octokit/rest";
-import 'dotenv/config';
+const fs = require("fs");
+const { Octokit } = require("@octokit/rest");
+require("dotenv").config();
 
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
@@ -12,12 +12,11 @@ async function main() {
     process.exit(1);
   }
 
-  // Get the latest open PR
   const { data: prs } = await octokit.pulls.list({
     owner,
     repo,
     state: "open",
-    per_page: 1
+    per_page: 1,
   });
 
   if (!prs.length) {
@@ -32,8 +31,10 @@ async function main() {
       number: pr.number,
       title: pr.title,
       body: pr.body,
-      user: { login: pr.user.login }
-    }
+      user: { login: pr.user.login },
+      head: { ref: pr.head.ref },
+      base: { ref: pr.base.ref },
+    },
   };
 
   fs.writeFileSync("event.json", JSON.stringify(payload, null, 2));

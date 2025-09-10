@@ -8,8 +8,7 @@
     "test": "jest --runInBand",
     "test:coverage": "jest --coverage --coverageReporters=json-summary",
     "generate-event": "node ./scripts/generate-event.js",
-    "pr-check": "npm run generate-event && node ./scripts/pr-check.js",
-    "pr-test": "npm run generate-event && npm run pr-check"
+    "pr-check": "npm run generate-event && node ./scripts/pr-check.js"
   },
   "keywords": [
     "github",
@@ -24,7 +23,7 @@
   ],
   "author": "Kyaw Soe",
   "license": "MIT",
-  "type": "module",
+  "type": "commonjs",
   "devDependencies": {
     "@eslint/js": "^9.35.0",
     "@typescript-eslint/eslint-plugin": "^8.43.0",

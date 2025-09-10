@@ -1,6 +1,16 @@
 ## Description
-Explain the changes in this PR.
+
+Please include a summary of the changes and the related issue.
+
+## Type of change
+
+- [ ] Bug fix
+- [ ] New feature
+- [ ] Code refactor
+- [ ] Documentation update
 
 ## Checklist
-- [ ] Tests added/updated
-- [ ] Documentation updated
+
+- [ ] Code follows project style guidelines
+- [ ] Lint and tests pass
+- [ ] PR description is complete

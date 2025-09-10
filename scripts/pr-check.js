@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-import { exec } from "child_process";
-import fs from "fs";
-import path from "path";
-import { Octokit } from "@octokit/rest";
-import "dotenv/config";
+const { exec } = require("child_process");
+const fs = require("fs");
+const path = require("path");
+const { Octokit } = require("@octokit/rest");
+require("dotenv").config();
 
 function runCmd(cmd) {
   return new Promise((resolve) => {
@@ -52,7 +52,7 @@ async function main() {
   console.log(test.stdout);
   if (test.stderr) console.error(test.stderr);
 
- // Read coverage safely
+  // Read coverage safely
   let coveragePct = 0;
   const covPath = path.join(process.cwd(), "coverage", "coverage-summary.json");
   console.log("Looking for coverage file at:", covPath);
@@ -64,7 +64,7 @@ async function main() {
       const linesPct = cov.total?.lines?.pct;
       coveragePct =
         linesPct === "Unknown"
-          ? 88
+          ? 0
           : Number(linesPct ?? cov.total?.statements?.pct ?? 0);
 
       console.log("Coverage percent:", coveragePct);
@@ -73,7 +73,9 @@ async function main() {
       coveragePct = 0;
     }
   } else {
-    console.log("Coverage file not found after waiting, skipping coverage check.");
+    console.log(
+      "Coverage file not found after waiting, skipping coverage check."
+    );
     coveragePct = 0;
   }
 
@@ -88,8 +90,7 @@ async function main() {
     comment += `📊 Coverage: ${coveragePct}%\n`;
   }
 
-
-  // Post comment if GitHub token is valid
+  // Post comment
   if (process.env.GITHUB_TOKEN && process.env.GITHUB_TOKEN !== "dummy-token") {
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     try {
@@ -107,20 +108,15 @@ async function main() {
     console.log("Skipping GitHub comment (dummy token).");
   }
 
-  // Fail job if checks fail or coverage below threshold
-    const threshold = Number(process.env.COVERAGE_THRESHOLD ?? 80);
-  if (
-    lint.code !== 0 ||
-    test.code !== 0 ||
-    coveragePct < threshold
-  ) {
+  const threshold = Number(process.env.COVERAGE_THRESHOLD ?? 80);
+  if (lint.code !== 0 || test.code !== 0 || coveragePct < threshold) {
     console.error("PR checks failed!");
     process.exit(1);
   }
 
   console.log("PR checks passed!");
 
-  // ✅ Auto-merge PR normally (no squash/rebase)
+  // Auto-merge PR normally (no squash/rebase)
   if (process.env.GITHUB_TOKEN && process.env.GITHUB_TOKEN !== "dummy-token") {
     const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
@@ -134,26 +130,22 @@ async function main() {
 
       if (merge.status === 200) {
         console.log(`✅ PR #${prNumber} merged successfully!`);
+
         const branch = payload.pull_request?.head?.ref;
-        if (branch) {
-          try {
-            await octokit.rest.git.deleteRef({
-              owner,
-              repo: name,
-              ref: `heads/${branch}`,
-            });
-            console.log(`🧹 Deleted branch: ${branch}`);
-          } catch (err) {
-            console.error(`⚠️ Failed to delete branch ${branch}:`, err.message);
-          }
+        const defaultBranch = payload.repository?.default_branch || "master";
+
+        if (branch && branch !== defaultBranch) {
+          await octokit.rest.git.deleteRef({
+            owner,
+            repo: name,
+            ref: `heads/${branch}`,
+          });
         }
       }
-
     } catch (err) {
       console.error("❌ Failed to auto-merge PR:", err.message);
     }
   }
-
 }
 
 main();
